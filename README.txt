@@ -1,62 +1,45 @@
 
 Cake Manager Micro Service (fictitious)
-=======================================
 
-A summer intern started on this project but never managed to get it finished.
+1.	Using Eclipse IDE with tomcat server
+2.	Needed to recreate the package com.waracle.cakemgr and move the java files to the package.
+3.	The url http://localhost:8080/cake-manager/ returned index.jsp - Hello World!
+4.	The url http://localhost:8080/cake-manager/cakes/ returned 404, the requested resource is not available.
+5.	The url http://localhost:8080/cake-manager/cakes return the data in json format.
+6.	Resubmission of the url caused the server to timeout.
+7.	Made the following changes to CakeEntity
 
+  a.	renamed table Employee to Cake
+  b.	changed the uniqueConstraint for TITLE
+  c.	renamed 	Integer employeeId to cakeId
+              column EMAIL to TITLE
+              column FIRST_NAME to DESCRIPTION
+              column LAST_NAME to IMAG
+		
 
-Requirements:
+8.	the unique the cakes from the json are now being shown without any errors.
+9.	On re submission of the url the server still hangs.
+10.	Made the following changes to CakeServlet
+   a.	In the doGet method  the session is not being closed.
+   b.	Closing the session stopped the server from hanging.
+   c.	Improved the json parsing in the init method by using the ObjectMapper
+   d.	This caused a problem as the json had an attribute of desc rather then description.
+   e.	Changed the description attribute in the CakeEntity to desc.
+   f.	Refactored the doGet method to to use ObjectMapper to write the json to the response.
+   g. Added a validBrowser method so any clients not recognised by the method would return the data as json.
 
-* By accessing the root of the server (/) it should be possible to list the cakes currently in the system.  This
- must be presented in an acceptable format for a human to read.
+11. add a doPost method 
+   a.  validates that a title, description and image url exists in the request.
+   b. Stores any validation errors in an array list that is set in a response attribute.
+   c. if valid add a new cake to the database.
+   d. If the cake exist write a errror message to the response
 
-* It must be possible for a human to add a new cake to the server.
-
-* By accessing an alternative endpoint (/cakes) with an appropriate client it must be possible to download a list of
- the cakes currently in the system as JSON data.
-
-* Accessing the /cakes endpoint with a web browser must show the human presentation of the list of cakes.
-
-* The /cakes endpoint must also allow new cakes to be created.
-
-
-The developer assured us that some of the above is complete, but at the moment accessing the /cakes endpoint
- returns a 404, so getting this working should be the first priority.
-
-There may be other bugs and mistakes, feel free to fix anything you find. Likewise, feel free to re-organise,
- refactor or re-write the project anyway you see fit.
-
-
-
-Project Info
-============
-
-The project uses Maven and Servlet 3.0.
-
-To run a server locally execute the following command:
-
-`mvn jetty:run`
-
-and access the following URL:
-
-`http://localhost:8282/`
+12. add a JSP 
+   a. which displays the cakes from the database.
+   b Allows the addition of a new cake.
+   c. Shows any error messages.
 
 
-You can use any IDE you like, so long as the project can build and run with Maven.
-
-The project loads some pre-defined data in to an in-memory database, which is acceptable for this exercise.  There is
- no need to create persistent storage.
 
 
-Submission
-==========
-
-
-Please provide your version of this project as a zip or gzip.   Use Google Drive or some other file sharing service to
-share it with us.
-
-Alternatively, you can submit the location of a git repository (e.g. Github, BitBucket, etc).
-
-Please also keep a log of the changes you make as a text file and provide this to us with your submission.
-
-Good luck!
+	
